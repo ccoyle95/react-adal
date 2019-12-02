@@ -232,7 +232,7 @@ var AuthenticationContext = (function () {
         this._saveItem(this.CONSTANTS.STORAGE.NONCE_IDTOKEN, this._idTokenNonce, true);
         this._saveItem(this.CONSTANTS.STORAGE.ERROR, '');
         this._saveItem(this.CONSTANTS.STORAGE.ERROR_DESCRIPTION, '');
-        var urlNavigate = this._getNavigateUrl('id_token', null) + '&nonce=' + encodeURIComponent(this._idTokenNonce);
+        var urlNavigate = this._getNavigateUrl('id_token', null) + '&response_mode=form_post&nonce=' + encodeURIComponent(this._idTokenNonce);
 
         if (this.config.displayCall) {
             // User defined way of handling the navigation
@@ -510,7 +510,7 @@ var AuthenticationContext = (function () {
         if (responseType === this.RESPONSE_TYPE.ID_TOKEN_TOKEN) {
             this._idTokenNonce = this._guid();
             this._saveItem(this.CONSTANTS.STORAGE.NONCE_IDTOKEN, this._idTokenNonce, true);
-            urlNavigate += '&nonce=' + encodeURIComponent(this._idTokenNonce);
+            urlNavigate += '&response_mode=form_post&nonce=' + encodeURIComponent(this._idTokenNonce);
         }
 
         urlNavigate = urlNavigate + '&prompt=none';
@@ -543,7 +543,7 @@ var AuthenticationContext = (function () {
         var urlNavigate = this._urlRemoveQueryStringParameter(this._getNavigateUrl(responseType, resource), 'prompt');
         urlNavigate = urlNavigate + '&prompt=none';
         urlNavigate = this._addHintParameters(urlNavigate);
-        urlNavigate += '&nonce=' + encodeURIComponent(this._idTokenNonce);
+        urlNavigate += '&response_mode=form_post&nonce=' + encodeURIComponent(this._idTokenNonce);
         this.registerCallback(expectedState, this.config.clientId, callback);
         this.verbosePii('Navigate to:' + urlNavigate);
         frameHandle.src = 'about:blank';
